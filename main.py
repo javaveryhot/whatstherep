@@ -39,6 +39,7 @@ def __user_reputation(community, uid):
       else:
         tag_popularity[individual_tag] = 1
       total_tags += 1
+
   best_tag = None
   if total_tags > 5:
     max_val = 0
