@@ -1,0 +1,280 @@
+body {
+  background: #192018;
+}
+
+main {
+	position: relative;
+	display: block;
+	margin: 10px 40px;
+	padding: 20px 40px;
+	background: #2d4215;
+	top: 120px;
+	border: 1px solid #385d0e;
+	border-radius: 2px;
+  box-shadow: 0px 1px 5px #000;
+}
+
+.navigation {
+	position: absolute;
+	width: calc(100% - 60px);
+	height: 100px;
+	background: repeating-linear-gradient(45deg, #0c2309, #0c2309 10px, #334919 10px, #334919 20px);
+	top: 0px;
+	left: 0px;
+	padding: 0px 30px;
+	border: 5px solid #000;
+	border-left: none;
+	border-right: none;
+	box-shadow: inset 0px 0px 50px #000;
+}
+
+.banner {
+	position: absolute;
+	height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p, label, li, td, th {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color: #e2d6c0/*#f3e2c4*/;
+	margin: 0px;
+}
+
+
+input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]), select, textarea {
+	width: 200px;
+	height: 21px;
+	background: #adad8e;
+	border: 1px solid #c2c5ba;
+	border-radius: 3px;
+	color: #272a27;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	box-shadow: 0px 1px 1px #4d562e;
+	padding: 2px 8px;
+	font-weight: 600;
+	font-size: 14px;
+	text-shadow: 0px 0.5px 1px #e6e0c9;
+}
+
+
+input:not([type="submit"]):not([type="checkbox"]):not([type="radio"]):focus, select:focus, textarea:focus {
+}
+
+select {
+  width: 100px;
+  height: 30px;
+}
+
+textarea {
+  width: 400px;
+  height: 80px;
+}
+
+
+button, input[type="submit"] {
+	background: #d9d9c5;
+	padding: 5px 30px;
+	border: 1px solid #f4f1f1;
+	border-radius: 2px;
+	color: #446c41;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 13px;
+	font-weight: 600;
+	text-shadow: 0px 0.5px 1px #ffefd2;
+	cursor: pointer;
+	user-select: none;
+	text-align: center;
+	box-sizing: border-box;
+	line-height: 18px;
+}
+
+button:hover, input[type="submit"]:hover {
+	background: #a2a28f;
+	border-color: #c2c2a9;
+	text-shadow: 0px 0.5px 1px #b7ad9b;
+	box-shadow: 0px 0px 1px #333;
+	color: #374b35;
+}
+
+
+.error, .warning, .success {
+	display: inline-block;
+	margin: 10px 0px;
+	padding: 4px 15px;
+	border: 1.5px solid #ffffff30;
+	border-radius: 1px;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	box-shadow: 0px 1px 1px #000, inset 0px 0px 1px #000;
+}
+
+.error {
+	background: #e32b2b;
+	color: #e2d6c0;
+}
+
+.warning {
+	background: #eaa92f;
+	color: #373124;
+}
+
+.success {
+  background: #58d254;
+	color: #373124;
+}
+
+
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  background: #7a935e;
+  color: #fff;
+  text-align: left;
+  border-color: #63883a !important;
+}
+
+tr:nth-child(odd) td {
+  background: #ffd49b;
+}
+
+tr:nth-child(even) td {
+  background: #ffdaaa;
+}
+
+td, th {
+  min-width: 80px;
+  padding: 4px;
+  border: 1px solid #ffc56f;
+  font-size: 12px;
+}
+
+td {
+  color: #3a381d;
+}
+
+tr:hover td {
+  background: #ffc56f;
+}
+
+.score-container {
+	position: absolute;
+	width: 80px;
+	height: 80px;
+  top: 20px;
+	right: 10px;
+	font-size: 40px;
+	text-align: center;
+	color: #fff;
+	font-family: sans-serif;
+  font-weight: 800;
+	border: 2px solid #e2d6c0;
+	box-shadow: 0px 1px 2px #111, inset 0px 0px 10px #000;
+	background: repeating-conic-gradient(#00000030 0deg 18deg, transparent 18deg 36deg);
+  user-select: none;
+}
+
+.score-container:hover {
+  animation-name: score-container-animation;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes score-container-animation {
+  25% { transform: rotate(5deg); }
+  50% { background: repeating-conic-gradient(transparent 0deg 18deg, #00000030 18deg 36deg); }
+  75% { transform: rotate(-5deg); }
+  100% { background: repeating-conic-gradient(#00000030 0deg 18deg, transparent 18deg 36deg); }
+}
+
+.score-container::before {
+	content: "WhatsTheRep.net";
+	font-size: 8px;
+	display: block;
+	font-weight: 500;
+}
+
+.score-container::after {
+	content: "Reputation Score";
+	font-size: 8px;
+	display: block;
+	font-weight: 500;
+}
+
+label {
+  font-size: 14px;
+}
+
+.mandatory-field::after {
+	content: "*";
+	position: absolute;
+	color: #f00f60;
+	font-size: 25px;
+	font-weight: 700;
+	line-height: 105%;
+  pointer-events: none;
+  margin-left: 5px;
+}
+
+.name-header {
+	color: #c7c2b0;
+	font-weight: 400;
+	text-shadow: 0px 1px 1px #111;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.dot {
+	display: inline-block;
+	position: relative;
+	width: 10px;
+	height: 10px;
+	top: -2px;
+	border-radius: 50%;
+	margin-right: 5px;
+}
+
+
+.review-container {
+	background: #606f4b;
+	padding: 15px;
+  padding-left: 40px;
+	border: 1px solid #7d9360;
+	border-radius: 5px;
+	box-shadow: 0px 1px 2px #000;
+	margin: 20px;
+}
+
+.good-review::before, .bad-review::before {
+	position: absolute;
+	left: 70px;
+	font-family: sans-serif;
+	font-size: 40px;
+	font-weight: 600;
+	text-shadow: 0px 1px 2px #000;
+}
+
+.good-review::before {
+  content: "+";
+  color: #6eea36;
+}
+
+.bad-review::before {
+  content: "-";
+  color: #e34545;
+}
+
+
+.review-tag {
+	display: inline-block;
+	margin: 5px;
+	padding: 5px;
+	background: #476b79;
+	color: #f7ece8;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 13px;
+	font-style: italic;
+	border: 1px solid #3c5762;
+	border-radius: 10px;
+}

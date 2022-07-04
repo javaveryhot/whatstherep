@@ -1,0 +1,27 @@
+{% set page_title = "Home" %}
+{% extends "layouts/default.html" %}
+
+{% block content %}
+<h3>WhatsTheRep.net</h3>
+<p>WhatsTheRep.net is a service that lets you find and share reputation about online community users. That way we can provide you with knowledge of a user's reliability when you are to do something where trust is key to success (e.g. for trading of game items, collaboration).<br>When you publish reputations, you are anonymous to other users.</p>
+
+<br><br>
+
+<h3>Find or set up a reputation page</h3>
+
+<form action="/search" method="post">
+  <label>Community</label><br>
+  <select name="community" autofocus>
+    {% for shortcode in communities %}
+      <option value="{{ shortcode }}">{{ communities[shortcode]["name"] }}</option>
+    {% endfor %}
+  </select>
+  <br><br>
+  <label>Identification</label><br>
+  <input type="text" name="uid" placeholder="Username or ID" required>
+  <br><br>
+  <input type="submit" value="What's the rep?">
+</form>
+
+<span class="warning">WhatsTheRep.net is neither associated with, endorsed by or communicating with any community mentioned on the website.</span>
+{% endblock %}

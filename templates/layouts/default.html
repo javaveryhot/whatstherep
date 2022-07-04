@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>{{ page_title + " • WhatsTheRep.net" }}</title>
+    <link href="/static/main.css" rel="stylesheet">
+    <link href="/static/images/icon_16x16.png" rel="icon">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ page_description or 'Find and leave reputation about users in communities such as Steam, Discord and Reddit to gain a better understanding of what to or not to trust.' }}">
+    <meta name="keywords" content="whatstherep,reputation,rep,trust,reviews,ratings,steam,discord,reddit,twitter">
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <div class="navigation">
+      <a href="/">
+        <img src="/static/images/logo_512x256.png" class="banner" draggable="false">
+      </a>
+    </div>
+
+    <main>
+      {% if request.args.get("ctx") and grab_context_message_cache(request.args.get("ctx")) %}
+        <span class="{{ grab_context_message_cache(request.args.get('ctx'))[0] }}">{{ grab_context_message_cache(request.args.get("ctx"))[1] }}</span><br>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+    </footer>
+
+    <script src="/static/main.js"></script>
+  </body>
+</html>

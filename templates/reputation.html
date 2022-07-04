@@ -1,0 +1,115 @@
+{% set page_title = "Reputation for " + id_query %}
+{% extends "layouts/default.html" %}
+
+{% block content %}
+<div class="score-container" style="background-color: {{ rep_score_color }} !important;">{{ rep_score if rep_score is not none else "?" }}</div>
+<h2 class="name-header"><span class="dot" style="background-color: {{ rep_score_color }};"></span><img src="{{ communities[meta['community']]['logo_url'] }}" width="16"> {{ id_query }}</h2>
+{% set ns = namespace(name=None) %}
+{% for id_method in meta["id_methods"] %}
+  {% if ns.name is none and id_method["value"]|lower == id_query|lower %}
+    {% set ns.name = communities[meta["community"]]["id_methods"][id_method["index"]|int]["label"] %}
+  {% endif %}
+{% endfor %}
+<label>identified as {{ ns.name }}</label>
+<br><br>
+
+<table style="position: absolute; top: 20px; right: 120px;">
+  <tr>
+    {% for id_method in communities[meta["community"]]["id_methods"] %}
+      <th>{{ id_method["label"] }}</th>
+    {% endfor %}
+  </tr>
+  <tr>
+    {% for id_method in communities[meta["community"]]["id_methods"] %}
+      {% set ns2 = namespace(collected=False, i=loop.index0) %}
+      {% for own_id_method in meta["id_methods"] %}
+        {% if own_id_method["index"] == ns2.i %}
+          {% set ns2.collected = True %}
+          <td style="user-select: all;">{{ own_id_method["value"] }}</td>
+        {% endif %}
+      {% endfor %}
+      {% if not ns2.collected %}
+        <td><a href="{{ request.path }}/edit">Add it</a></td>
+      {% endif %}
+    {% endfor %}
+  </tr>
+</table>
+
+
+<h3>Reputation</h3>
+<p><strong>{{ rep_score if rep_score is not none else "?" }}</strong>/100 <em>({{ rep_score_label }})</em></p>
+{% if rep_score is none %}
+  <p>This user does not have enough reviews yet to earn a reputation score.</p>
+{% endif %}
+<br>
+{% if best_tag is not none %}
+  <span class="review-tag">{{ communities[meta["community"]]["tags"][best_tag] }}</span>
+{% endif %}
+<p>
+  {% if total_reps > 0 %}
+    Positive reviews: {{ good_reps }} ({{ ((good_reps / total_reps) * 100)|round }}%)
+    <br>
+    Negative reviews: {{ total_reps - good_reps }} ({{ (((total_reps - good_reps) / total_reps) * 100)|round }}%)
+  {% else %}
+    No reviews yet for this user.
+  {% endif %}
+</p>
+
+<hr><br>
+
+{% if not has_created_review %}
+  <h3>Contribute with reputation</h3>
+  <form action="/{{ meta['community'] }}/{{ safe_id_query }}/add-reputation" method="post">
+    <label class="mandatory-field">What reputation do you give {{ id_query }}?</label><br>
+    
+    <input type="radio" name="reputation" id="good_rep" value="1">
+    <label for="good_rep">Positive</label><br>
+    
+    <input type="radio" name="reputation" id="bad_rep" value="0">
+    <label for="bad_rep">Negative</label><br><br>
+  
+    <label>Select all tags that describe this user:</label><br>
+    {% for tag in communities[meta["community"]]["tags"] %}
+      <input type="checkbox" name="tag_{{ loop.index0 }}" id="tag_{{ loop.index0 }}">
+      <label for="tag_{{ loop.index0 }}">{{ tag }}</label><br>
+    {% endfor %}
+    <p>Chosen tags will not be visible in your review, but will together with other who choose the same display an appropriate tag on their page.</p>
+    <br>
+  
+    <label>Write a review about this user:</label><br>
+    <textarea name="review_text" placeholder="What is your experience with this user? Do not include any sensitive or private information." maxlength="200" spellcheck="false"></textarea><br>
+    <span class="warning">By submitting your review below, you understand and agree that your review will add to the regarding users' statistics and be visible to anyone.<br>We will put a cookie in your browser that lasts a month, which grants you ownership of this review (creating more reviews will reset the age of the cookie).<br><strong>Do not</strong> base your reputation just because you dislike them. This reputation shall be helpful to other people.<br>Think if this user is or can be harmful to others.</span>
+    <br>
+    <input type="submit" value="Submit review">
+  </form>
+  <hr><br>
+{% endif %}
+
+<h3>Reviews</h3>
+<p>{{ total_reps }} reviews</p>
+{% if has_created_review %}
+  <div class="review-container {% if own_review['positive'] %}good{% else %}bad{% endif %}-review">
+    <h5>This is your review</h5>
+    {% for tag in own_review["tags"] %}
+      <span class="review-tag">{{ communities[meta["community"]]["tags"][tag] }}</span>
+    {% endfor %}
+    {% if own_review["text"] %}
+      <p>{{ own_review["text"] }}</p>
+    {% endif %}
+    <br>
+    <h6>{{ timestamp_to_string(own_review["date"]) }}</h6>
+  </div>
+{% endif %}
+
+{% for review in reviews %}
+  <div class="review-container {% if review['positive'] %}good{% else %}bad{% endif %}-review">
+    {% for tag in review["tags"] %}
+      <span class="review-tag">{{ communities[meta["community"]]["tags"][tag] }}</span>
+    {% endfor %}
+    {% if review["text"] %}
+      <p>{{ review["text"] }}</p>
+    {% endif %}
+    <h6>{{ timestamp_to_string(review["date"]) }}</h6>
+  </div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% set page_title = "New reputation page for " + id_query %}
+{% extends "layouts/default.html" %}
+
+{% block content %}
+<h2>Set up a reputation page for {{ communities[community]["name"] }} user</h2>
+<p>The user you seeked was not found registered on WhatsTheRep.net.<br>You can either try searching for them with another identification method or quickly set up a page for them here - even if you only came here to read their reputation.</p>
+<br><br>
+<label>Selected community where the user is found: {{ communities[community]["name"] }}</label><br><br>
+<form action="/create/{{ community }}/{{ safe_id_query }}/submit" method="post">
+  {% set ns = namespace(used_query_value=False) %}
+  {% for id_method in communities[community]["id_methods"] %}
+    <label{% if id_method["mandatory"] %} class="mandatory-field"{% endif %}>{{ id_method["label"] }}</label><br>
+    <input type="text" name="id_method_{{ loop.index0 }}" pattern="{{ id_method['regex'] }}" placeholder="Example: {{ id_method['example'] }}"{% if not ns.used_query_value and regex.match(id_method["regex"], id_query) %}{% set ns.used_query_value = True %} value="{{ id_query }}"{% endif %}{% if loop.index0 == 0 %} autofocus{% endif %}{% if id_method["mandatory"] %} required{% endif %}>
+    <br><br>
+  {% endfor %}
+  <span class="warning">Please provide with as many fields as possible, to make it easier for others to find this reputation page. Fields marked with a red asterisk are required.</span>
+  <br>
+  <input type="submit" value="Set up reputation page">
+</form>
+{% endblock %}
